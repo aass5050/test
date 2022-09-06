@@ -1,0 +1,6 @@
+file:
+  path: "uploads"
+spring:
+  servlet:
+    multipart:
+      max-file-size: "10MB"

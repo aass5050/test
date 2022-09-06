@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+</head>
+<body>
+<form id="form">
+    <input id="title" type="text" name="title">
+    <input id="desc" type="text" name="desc">
+    <input id="file" type="file" name="file" multiple>
+    <button id="submit" type="button">提交</button>
+</form>
+
+<script>
+  let selectFile;
+  const btn = document.querySelector('#submit')
+  const fileEle = document.querySelector('#file')
+
+  fileEle.addEventListener('change', function (event) {
+    selectFile = event.target.files;
+    console.log(selectFile)
+  })
+
+
+  btn.addEventListener('click', function () {
+    const form = document.querySelector('#id')
+    const title = document.querySelector('#title').value
+    const desc = document.querySelector('#desc').value
+
+    const formData = new FormData()
+    const payload = JSON.stringify({
+      'title': title,
+      'desc': desc,
+    });
+
+    formData.append("file", selectFile)
+    formData.append("payload", payload)
+
+    console.log(formData.get('file'));
+
+    fetch('http://localhost:8080/upload', {
+      method: 'POST',
+      headers: {},
+      body: formData
+    }).then((r) => {
+      console.log(r);
+    });
+
+  })
+
+
+</script>
+</body>
+</html>
